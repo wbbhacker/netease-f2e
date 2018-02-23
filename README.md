@@ -10,7 +10,6 @@ npm install netease-f2e -g
 
 # commond
 ```
-
 fe init  
 ```
 
