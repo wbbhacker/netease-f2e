@@ -1,10 +1,12 @@
-#!node
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-
+const secondArgv = process.argv[2];
+	
 let pathObj,goOrAuto,projectName,data;
-
+	
 let code =  'stages:\n'+
 			'- deploy\n'+
 			'deploy:\n'+
@@ -15,20 +17,15 @@ let code =  'stages:\n'+
 			'  only:\n'+
 			'    - master';
 
-const secondArgv = process.argv[2];
-
+	
 switch(secondArgv){
 	case 'init':
 		init();
 		break;
 }
 
-
-
-
-
-
 function init(){
+	// create .yml file
 	pathObj = path.parse(process.cwd());
 	goOrAuto = pathObj.dir.search('sale_go') > -1 ? 'sale_go' : 'sale_auto';
 	projectName = pathObj.name;
@@ -39,6 +36,8 @@ function init(){
 		if (err) throw err;
 		console.log(chalk.red('success!!!'));
 	});
+
+	// create project files
 }
 
 function sprintf(str) {
