@@ -75,7 +75,6 @@ function getImgJson(rootPath,flag){
 
 	var name = path.parse(rootPath).name;
 	var reg = new RegExp(name+'\/\\S*');
-	console.log(reg)
 
 	readFile(rootPath);
 

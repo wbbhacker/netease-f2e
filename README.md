@@ -21,7 +21,6 @@ fe init
 * 获取当前文件夹下所有文件的json数据
 ```
 fe getImg [true|false]
-
 ```
 > 第三个参数为true时，生成的代码为格式化的；为false时，生成的代码为压缩的；默认为false
 
