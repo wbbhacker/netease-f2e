@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const _ = require('lodash');
 const secondArgv = process.argv[2];
 	
 let pathObj,goOrAuto,projectName,data;
@@ -22,7 +23,95 @@ switch(secondArgv){
 	case 'init':
 		init();
 		break;
+	case 'getImg':
+		let flag = process.argv[3] == 'true' ? true : false;
+		let imgPath = process.cwd();
+		getImgJson(imgPath,flag);
+		break;
+	case 'rename':
+		if(process.argv[3] == undefined ){
+			console.log(chalk.red('需要第三个参数：名称'));
+			return;
+		}else{
+			rename(process.cwd(),process.argv[3])
+		}
+		
 }
+
+/***************************rename*******************************/ 
+function rename(imgPath,newName){
+
+	var obj = fs.readdirSync(imgPath).map((elem,idx)=>{
+
+		return {
+			name:elem,
+			num:parseInt(elem.match(/[0-9]+/)[0])
+		}
+
+	});
+
+
+	_.orderBy(obj,['num'],['asc']).forEach((obj,idx)=>{
+
+		let oldPath = path.join(imgPath+'/'+obj.name);
+		let ext = path.parse(oldPath).ext;
+		let newPath = path.join(imgPath+'/'+newName+idx+ext);
+
+		fs.renameSync(oldPath,newPath)
+
+	});
+
+	console.log(chalk.red('修改成功！！！'));
+}
+
+
+
+/***************************getImg*******************************/ 
+
+function getImgJson(rootPath,flag){
+
+	var str = '',
+		arrSum = [];
+
+	var name = path.parse(rootPath).name;
+	var reg = new RegExp(name+'\/\\S*');
+	console.log(reg)
+
+	readFile(rootPath);
+
+	str = arrSum.map((elem)=>{
+
+		elem = elem.replace(/\\/g,'/').match(reg)[0];
+		return  flag ? '\'' + elem + '\'\n' : '\'' + elem + '\'';
+
+	}).toString();
+
+	str = '['+str+ ']';
+
+	fs.writeFile('imgJsonData.js',str,(err)=>{
+			if(err) throw err;
+			console.log(chalk.red('写入 imgJsonData.js 成功！！！'));
+	});
+
+	function readFile(rootPath){
+
+		fs.readdirSync(rootPath).forEach((elem)=>{
+
+			if(fs.statSync(path.join(rootPath,elem)).isFile()){
+				arrSum.push(path.join(rootPath,elem));
+			}else{
+				readFile(path.join(rootPath,elem));
+			}
+
+		});
+	}
+
+}
+
+
+
+
+/***************************init*******************************/ 
 
 function init(){
 	// create .yml file
@@ -37,7 +126,6 @@ function init(){
 		console.log(chalk.red('success!!!'));
 	});
 
-	// create project files
 }
 
 function sprintf(str) {
