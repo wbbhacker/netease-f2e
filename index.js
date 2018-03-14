@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const _ = require('lodash');
 const secondArgv = process.argv[2];
 	
-let pathObj,goOrAuto,projectName,data;
+let pathObj,goOrAuto,projectName,data,urlData;
 	
 let code =  'stages:\n'+
 			'- deploy\n'+
@@ -17,6 +17,13 @@ let code =  'stages:\n'+
 			'    - online.sh %s %s\n'+
 			'  only:\n'+
 			'    - master';
+
+let autoUrl = '* 测试地址(test): http://test.go.163.com/web/sale_auto/%s/index.html\n\r'+
+			  '* 正式地址(formal): http://s.auto.163.com/web/%s/index.html';
+
+let goUrl = '* 测试地址(test): http://test.go.163.com/web/sale_go/%s/index.html\n\r'+
+			'* 正式地址(formal): http://go.163.com/web/%s/index.html';
+
 
 	
 switch(secondArgv){
@@ -112,19 +119,31 @@ function getImgJson(rootPath,flag){
 
 /***************************init*******************************/ 
 
+
+
 function init(){
+	let str;
+
 	// create .yml file
 	pathObj = path.parse(process.cwd());
 	goOrAuto = pathObj.dir.search('sale_go') > -1 ? 'sale_go' : 'sale_auto';
+	str = pathObj.dir.search('sale_go') > -1 ? goUrl : autoUrl;
 	projectName = pathObj.name;
 
+
+	urlData = sprintf(str,pathObj.name,pathObj.name);
 	data = sprintf(code,goOrAuto,projectName);
 
 	fs.writeFile('.gitlab-ci.yml',data,(err)=>{
 		if (err) throw err;
-		console.log(chalk.red('success!!!'));
+		console.log(chalk.red('create .gitlab-ci.yml success!!!'));
 	});
 
+	fs.writeFile('README.md',urlData,(err)=>{
+		if (err) throw err;
+		console.log(chalk.red('create README.md success!!!'));
+ 	});
+ 	
 }
 
 function sprintf(str) {
