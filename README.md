@@ -15,7 +15,7 @@ npm install netease-f2e -g
 fe init  
 ```
 
-> 在项目目录下打开命令行，输入命令`fe init ` ，自动创建.gitlab-ci.yml 文件
+> 在项目目录下打开命令行，输入命令`fe init ` ，自动创建.gitlab-ci.yml、MEADME.md文件, MEADME.md 里面含有项目的正式和测试链接;
 
 
 * 获取当前文件夹下所有文件的json数据
