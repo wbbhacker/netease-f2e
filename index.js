@@ -23,13 +23,21 @@ let autoUrl = '* 测试地址(test): http://test.go.163.com/web/sale_auto/%s/ind
 
 let goUrl = '* 测试地址(test): http://test.go.163.com/web/sale_go/%s/index.html\n\r'+
 			'* 正式地址(formal): http://go.163.com/web/%s/index.html';
-
+			
+let ignore = '.idea/\r\n.project';
 
 	
 switch(secondArgv){
 	case 'init':
-		init();
-		break;
+		if( process.argv[3] == 'true' ){
+			init({
+				gitIgnore:true
+			});
+
+		}else{
+			init();
+		}
+		break;	
 	case 'getImg':
 		let flag = process.argv[3] == 'true' ? true : false;
 		let imgPath = process.cwd();
@@ -121,9 +129,9 @@ function getImgJson(rootPath,flag){
 
 
 
-function init(){
+function init(opt){
 	let str;
-
+	opt = opt || {};
 	// create .yml file
 	pathObj = path.parse(process.cwd());
 	goOrAuto = pathObj.dir.search('sale_go') > -1 ? 'sale_go' : 'sale_auto';
@@ -143,8 +151,19 @@ function init(){
 		if (err) throw err;
 		console.log(chalk.red('create README.md success!!!'));
  	});
+
+ 	if(opt.gitIgnore == true){
+ 		
+ 		fs.writeFile('.gitignore',ignore,'utf8',(err)=>{
+			if (err) throw err;
+			console.log(chalk.red('create .gitignore success!!! 99'));
+ 		});
+ 		
+ 	}
  	
 }
+
+
 
 function sprintf(str) {
     var args = arguments,
