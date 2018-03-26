@@ -1,6 +1,6 @@
 {
   "name": "netease-f2e",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "f2e tool",
   "bin": {
     "fe": "./index.js"

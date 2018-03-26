@@ -30,6 +30,13 @@ fe getImg [true|false]
 fe rename customName
 ```
 > 修改当前文件夹下所有img图片的名称： customName0-customName9.... ps：注意是序列帧图片
+
+* 在默认浏览器中打开项目的正/测式链接
+```
+fe open [true]
+```
+> 在默认浏览器中打开项目的正/测式链接; 第三个参数为true时,打开正式链接，其余为打开测式链接;
+
 ## FAQ
 ### 插件安装失败原因
   1. 升级node版本 > 8.9.4  
