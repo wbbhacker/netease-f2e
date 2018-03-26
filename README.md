@@ -12,11 +12,9 @@ npm install netease-f2e -g
 
 * 生成.gitlab-ci.yml文件
 ```
-fe init [true]
+fe init 
 ```
-
-> 在项目目录下打开命令行，输入命令`fe init ` ，自动创建.gitlab-ci.yml、MEADME.md文件, MEADME.md 里面含有项目的正式和测试链接;
-> 第三个参数为ture时，会生成.gitignore文件，忽略.idea 文件夹 和 .project 文件
+> 在项目目录下打开命令行，输入命令`fe init ` ，自动创建.gitlab-ci.yml、MEADME.md、.gitignore文件, MEADME.md 里面含有项目的正式和测试链接;.gitignore文件会忽略.idea 文件夹 和 .project 文件;
 
 
 * 获取当前文件夹下所有文件的json数据
@@ -33,9 +31,9 @@ fe rename customName
 
 * 在默认浏览器中打开项目的正/测式链接
 ```
-fe open [true]
+fe [test|go]
 ```
-> 在默认浏览器中打开项目的正/测式链接; 第三个参数为true时,打开正式链接，其余为打开测式链接;
+> 在默认浏览器中打开项目的正/测式链接,fe test 为打开测试链接,fe go 为打开正式链接;
 
 ## FAQ
 ### 插件安装失败原因

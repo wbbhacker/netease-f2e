@@ -31,15 +31,8 @@ let ignore = '.idea/\r\n.project';
 	
 switch(secondArgv){
 	case 'init':
-		if( process.argv[3] == 'true' ){
-			init({
-				gitIgnore:true
-			});
-
-		}else{
 			init();
-		}
-		break;	
+		break;
 	case 'getImg':
 		let flag = process.argv[3] == 'true' ? true : false;
 		let imgPath = process.cwd();
@@ -52,19 +45,24 @@ switch(secondArgv){
 		}else{
 			rename(process.cwd(),process.argv[3])
 		}
-	case 'open':
-		if( process.argv[3] == 'true'){
-			open(true);
-		}else{
-			open(false)
-		}
+		break;
+	case 'test':
+		open(false);
+
+		break;
+	case 'go':
+		open(true);
+		
+		break;
 		
 }
 /***************************open*******************************/ 
 function open(flag){
+
 	pathObj = path.parse(process.cwd());
 	testUrl = pathObj.dir.search('sale_go') > -1 ? 'http://test.go.163.com/web/sale_go/'+pathObj.name+'/index.html' : 'http://test.go.163.com/web/sale_auto/'+pathObj.name+'/index.html';
 	onlineUrl = pathObj.dir.search('sale_go') > -1 ? 'http://go.163.com/web/'+pathObj.name+'/index.html' : 'http://s.auto.163.com/web/'+pathObj.name+'/index.html';
+	console.log(testUrl,onlineUrl)
 	if(flag){
 		c.exec('start ' + onlineUrl);
 	}else{
@@ -172,14 +170,13 @@ function init(opt){
 		console.log(chalk.red('create README.md success!!!'));
  	});
 
- 	if(opt.gitIgnore == true){
  		
- 		fs.writeFile('.gitignore',ignore,'utf8',(err)=>{
-			if (err) throw err;
-			console.log(chalk.red('create .gitignore success!!! 99'));
- 		});
+ 	fs.writeFile('.gitignore',ignore,'utf8',(err)=>{
+		if (err) throw err;
+		console.log(chalk.red('create .gitignore success!!! '));
+ 	});
  		
- 	}
+
  	
 }
 
