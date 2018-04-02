@@ -25,7 +25,7 @@ let autoUrl = '* 测试地址(test): http://test.go.163.com/web/sale_auto/%s/ind
 let goUrl = '* 测试地址(test): http://test.go.163.com/web/sale_go/%s/index.html\n\r'+
 			'* 正式地址(formal): http://go.163.com/web/%s/index.html';
 
-let ignore = '.idea/\r\n.project';
+let ignore = '.idea/\r\n.project\r\n.DS_Store';
 
 
 	
@@ -60,8 +60,8 @@ switch(secondArgv){
 function open(flag){
 
 	pathObj = path.parse(process.cwd());
-	testUrl = pathObj.dir.search('sale_go') > -1 ? 'http://test.go.163.com/web/sale_go/'+pathObj.name+'/index.html' : 'http://test.go.163.com/web/sale_auto/'+pathObj.name+'/index.html';
-	onlineUrl = pathObj.dir.search('sale_go') > -1 ? 'http://go.163.com/web/'+pathObj.name+'/index.html' : 'http://s.auto.163.com/web/'+pathObj.name+'/index.html';
+	testUrl = pathObj.dir.search('sale_auto') > -1 ? 'http://test.go.163.com/web/sale_auto/'+pathObj.name+'/index.html' : 'http://test.go.163.com/web/sale_go/'+pathObj.name+'/index.html';
+	onlineUrl = pathObj.dir.search('sale_auto') > -1 ? 'http://s.auto.163.com/web/'+pathObj.name+'/index.html' : 'http://go.163.com/web/'+pathObj.name+'/index.html';
 	console.log(testUrl,onlineUrl)
 	if(flag){
 		c.exec('start ' + onlineUrl);
@@ -152,8 +152,8 @@ function init(opt){
 	opt = opt || {};
 
 	pathObj = path.parse(process.cwd());
-	goOrAuto = pathObj.dir.search('sale_go') > -1 ? 'sale_go' : 'sale_auto';
-	str = pathObj.dir.search('sale_go') > -1 ? goUrl : autoUrl;
+	goOrAuto = pathObj.dir.search('sale_auto') > -1 ? 'sale_auto' : 'sale_go';
+	str = pathObj.dir.search('sale_auto') > -1 ? autoUrl  : goUrl;
 	projectName = pathObj.name;
 
 
