@@ -13,9 +13,11 @@ let code =  'stages:\n'+
 			'- deploy\n'+
 			'deploy:\n'+
 			'  stage: deploy\n'+
+			'  tags:\n'+
+    		'	 - sales\n'+
 			'  script:\n'+
 			'    - echo "hello world"\n'+
-			'    - online.sh %s %s\n'+
+			'    - /home/gitlab-runner/.local/bin/online.sh %s %s\n'+
 			'  only:\n'+
 			'    - master';
 
@@ -78,7 +80,7 @@ function rename(imgPath,newName){
 
 		return {
 			name:elem,
-			num:parseInt(elem.match(/[0-9]+/)[0])
+			num:parseInt(elem.match(/[0-9]+/) instanceof Array ? elem.match(/[0-9]+/)[0] : 0) 
 		}
 
 	});
